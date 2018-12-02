@@ -21,6 +21,14 @@ public class IndexController {
 	Services services;
 
 	@GET
+	@Path("/welcome")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response welCome() {
+		return Response.ok("Welcome").build();
+	}
+	
+	@GET
 	@Path("/topFive")
 	@Produces(MediaType.APPLICATION_JSON)
     public Response topFive() {
