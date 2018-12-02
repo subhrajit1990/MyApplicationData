@@ -13,7 +13,6 @@ import my.application.entities.GuessMeAccount;
 import my.application.repositories.GuessMeAccountRepository;
 
 
-
 @Service
 public class Services {
 	
