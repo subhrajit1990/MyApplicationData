@@ -2,17 +2,18 @@ package my.application.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+
+
+
+@SuppressWarnings("deprecation")
 @Configuration
-public class CORSConfig implements WebMvcConfigurer {
-
-	 public void addCorsMappings(CorsRegistry registry) {
-	 registry.addMapping("/**")
-  	  .allowedOrigins("*")
-	  .allowedMethods("POST", "GET",  "PUT",  "DELETE")
-	  .allowedHeaders("X-Auth-Token", "Content-Type")
-	  .allowCredentials(false)
-	  .maxAge(4800);
-	 }
+public class CORSConfig extends WebMvcConfigurerAdapter{
+    @Override
+    public void addInterceptors(InterceptorRegistry registry){
+        registry.addInterceptor(new AccessControlInterceptor ()).addPathPatterns("/**");
+    }
 }

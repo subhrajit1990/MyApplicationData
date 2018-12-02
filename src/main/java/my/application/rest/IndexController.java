@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import my.application.services.Services;
 
-@CrossOrigin(origins = {"https://justguess.herokuapp.com/","http://localhost:8080"}, maxAge = 3600)
+//@CrossOrigin(origins = {"https://justguess.herokuapp.com/","http://localhost:8080"}, maxAge = 3600)
 @Path("/users")
 public class IndexController {
 
