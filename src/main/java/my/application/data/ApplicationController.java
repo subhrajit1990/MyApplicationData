@@ -3,7 +3,7 @@ package my.application.data;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages={"my.application"})
 public class ApplicationController {
 
 	public static void main(String[] args) {
