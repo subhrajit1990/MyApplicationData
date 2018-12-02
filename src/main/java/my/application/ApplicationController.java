@@ -24,17 +24,9 @@ public class ApplicationController {
 		
 	}
 	
-	 @SuppressWarnings("deprecation")
-	@Bean
-	    public WebMvcConfigurer corsConfigurer() {
-	        return new WebMvcConfigurerAdapter() {
-	            @Override
-	            public void addCorsMappings(CorsRegistry registry) {
-	                registry.addMapping("/**").allowedMethods("GET", "POST", "PUT", "DELETE").allowedOrigins("*")
-	                        .allowedHeaders("*");
-	            }
-	        };
-	    }
+	public void addCorsMappings(CorsRegistry registry) {
+		registry.addMapping("/**");
+	}
 }
 
 
