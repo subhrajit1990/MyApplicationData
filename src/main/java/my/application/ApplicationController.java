@@ -24,8 +24,15 @@ public class ApplicationController {
 		
 	}
 	
+	
 	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**");
+	  registry.addMapping("/info/**")
+	   	  .allowedOrigins("http://localhost:8080", "https://justguess.herokuapp.com/")
+		  .allowedMethods("POST", "GET",  "PUT", "OPTIONS", "DELETE")
+		  .allowedHeaders("X-Auth-Token", "Content-Type")
+		  .exposedHeaders("custom-header1", "custom-header2")
+		  .allowCredentials(false)
+		  .maxAge(4800);
 	}
 }
 
