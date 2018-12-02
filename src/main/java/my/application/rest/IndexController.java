@@ -9,11 +9,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import my.application.services.Services;
 
+@CrossOrigin(origins = {"https://justguess.herokuapp.com/","http://localhost:8080"}, maxAge = 3600)
 @Path("/users")
 public class IndexController {
 
