@@ -9,7 +9,9 @@ import javax.inject.Inject;
 import org.glassfish.jersey.internal.guava.Lists;
 import org.springframework.stereotype.Service;
 
+import my.application.entities.CardList;
 import my.application.entities.GuessMeAccount;
+import my.application.repositories.CardListRepository;
 import my.application.repositories.GuessMeAccountRepository;
 
 
@@ -20,6 +22,9 @@ public class Services {
 	
 	@Inject
 	GuessMeAccountRepository guessMeAccountRepository;
+	
+	@Inject
+	CardListRepository cardListRepository;
 	
 	public Object topFiveService() {
 		System.out.println("Hi I am executing 1st");
@@ -32,10 +37,10 @@ public class Services {
 
 	public Object cardListService() {
 		System.out.println("Hi I am executing cardList");
-		ArrayList<GuessMeAccount> users = Lists.newArrayList(guessMeAccountRepository.findAll());
+		ArrayList<CardList> cardList = Lists.newArrayList(cardListRepository.findAll());
 		System.out.println("Hi I am executing cardList 2nd");
 		response = new HashMap<String, Object>();
-		response.put("cards",users);
+		response.put("cards",cardList);
 		return response;
 	}
 }
