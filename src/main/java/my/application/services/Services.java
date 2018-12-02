@@ -22,8 +22,10 @@ public class Services {
 	@Inject
 	GuessMeAccountRepository guessMeAccountRepository;
 	
-	public Object topFive() {
+	public Object topFiveService() {
+		System.out.println("Hi I am executing 1st");
 		ArrayList<GuessMeAccount> users = Lists.newArrayList(guessMeAccountRepository.findAll());
+		System.out.println("Hi I am executing 2nd");
 		response = new HashMap<String, Object>();
 		response.put("Results",users);
 		return response;
