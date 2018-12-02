@@ -29,4 +29,13 @@ public class Services {
 		response.put("Results",users);
 		return response;
 	}
+
+	public Object cardListService() {
+		System.out.println("Hi I am executing cardList");
+		ArrayList<GuessMeAccount> users = Lists.newArrayList(guessMeAccountRepository.findAll());
+		System.out.println("Hi I am executing cardList 2nd");
+		response = new HashMap<String, Object>();
+		response.put("cards",users);
+		return response;
+	}
 }

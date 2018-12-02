@@ -33,8 +33,17 @@ public class IndexController {
 	@Produces(MediaType.APPLICATION_JSON)
     public Response topFive() {
     	
-        Object toFiveResponse = services.topFiveService();
-		return Response.ok(toFiveResponse).build();
+        Object topFiveResponse = services.topFiveService();
+		return Response.ok(topFiveResponse).build();
+	}
+	
+	@GET
+	@Path("/cardList")
+	@Produces(MediaType.APPLICATION_JSON)
+    public Response cardList() {
+    	
+        Object cardListResponse = services.cardListService();
+		return Response.ok(cardListResponse).build();
 	}
     
 }
