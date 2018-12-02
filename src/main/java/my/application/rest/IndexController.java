@@ -18,7 +18,7 @@ import my.application.services.Services;
 public class IndexController {
 
 	@Inject
-	private Services services;
+	Services services;
 
 	@GET
 	@Path("/topFive")
