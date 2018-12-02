@@ -1,12 +1,9 @@
 package my.application.rest;
 
-
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import my.application.services.Services;
-
 
 
 @RestController
@@ -18,6 +15,6 @@ public class IndexController {
     @GetMapping("/")
     public String index() {
     	services = new Services();
-        return services.printMe();
+        return services.topFive().toString();
     }
 }
