@@ -30,6 +30,8 @@ public class Services {
 	
 	GameMessage msg = null;
 	
+	GuessMeAccount myAccount = null;
+	
 	public Object topFveService() {
 		System.out.println("Hi I am executing 1st");
 		ArrayList<Object> users = Lists.newArrayList(guessMeAccountRepository.topFive());
@@ -48,9 +50,15 @@ public class Services {
 		return response;
 	}
 
-	public Object scoreService() {
+	public void scoreService(CommonRequest commonRequest) {
 		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Hi I am executing inserting score");
+		myAccount = new GuessMeAccount();
+		
+		myAccount.setUsername(commonRequest.getUserName());
+		myAccount.setEmail(commonRequest.getEmail());
+		myAccount.setPoint(commonRequest.getPoint());
+		guessMeAccountRepository.save(myAccount);
 	}
 
 	public Object nameCheckService(CommonRequest commonRequest) {
