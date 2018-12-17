@@ -17,7 +17,7 @@ public interface GuessMeAccountRepository extends CrudRepository<GuessMeAccount,
 	
 	
 	
-	List<Object> findTop5ByPointLessThanOrderByPointDesc();
+	//List<Object> findTop5ByPointLessThanOrderByPointDesc();
 
 	@Query("SELECT COUNT(*) FROM GuessMeAccount account WHERE account.username = :username")
 	Long countById(@Param("username") String username);
