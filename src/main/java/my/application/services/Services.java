@@ -34,7 +34,7 @@ public class Services {
 	
 	public Object topFveService() {
 		System.out.println("Hi I am executing 1st");
-		ArrayList<Object> users = Lists.newArrayList(guessMeAccountRepository.topFive());
+		ArrayList<Object> users = Lists.newArrayList(guessMeAccountRepository.findTop5ByPointLessThanOrderByPointDesc());
 		System.out.println("Hi I am executing 2nd");
 		response = new HashMap<String, Object>();
 		response.put("Results",users);
