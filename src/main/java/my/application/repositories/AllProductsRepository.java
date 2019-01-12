@@ -10,6 +10,6 @@ import my.application.entities.Product;
 
 
 public interface AllProductsRepository extends CrudRepository<Product, Integer> {
-	@Query("SELECT  NEW my.application.ProductResponse(p.productName,pImage.productImageUrl,pImage.productImageThumbnailUrl,p.productPrice,p.headerTopRightText,p.headerTopLeftText,p.productCtaText,p.productDetails) FROM Product p JOIN p.productImage pImage") 
+	@Query("SELECT  NEW my.application.entities.ProductResponse(p.productName,pImage.productImageUrl,pImage.productImageThumbnailUrl,p.productPrice,p.headerTopRightText,p.headerTopLeftText,p.productCtaText,p.productDetails) FROM Product p JOIN p.productImage pImage") 
 	List<Object> fetchAll();
 }
