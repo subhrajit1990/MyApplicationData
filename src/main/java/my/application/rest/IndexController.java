@@ -14,6 +14,8 @@ import my.application.entities.ApplicationRequestWrapper;
 import my.application.entities.CommonRequest;
 import my.application.entities.GameMessage;
 import my.application.services.Services;
+import my.application.utils.Errors;
+import my.application.utils.FailureException;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -22,7 +24,7 @@ public class IndexController implements ErrorController {
 	@Autowired
 	Services services;
 
-	@RequestMapping(value = "/welcome")
+	@RequestMapping(value = {"/","/welcome"})
 
 	public String welCome() {
 		return "Welcome";
@@ -39,8 +41,9 @@ public class IndexController implements ErrorController {
 	@RequestMapping(value = "/cardList", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 
 	public Object cardList() {
-
+		
 		Object cardListResponse = services.cardListService();
+		
 		return cardListResponse;
 	}
 
@@ -52,10 +55,9 @@ public class IndexController implements ErrorController {
 		try {
 			services.scoreService(commonRequest);
 			gameMessage.setMessage("Success");
-			gameMessage.setStatusCode("0");
-		} catch (Exception e) {
-			gameMessage.setMessage("Error");
-			gameMessage.setStatusCode("100");
+		}catch (Exception e) {
+			gameMessage.setMessage(Errors.PERSISTANCEERROR.getErrorMessage());
+			gameMessage.setStatusCode(Errors.PERSISTANCEERROR.getErrorCode());
 		}
 		return gameMessage;
 	}
