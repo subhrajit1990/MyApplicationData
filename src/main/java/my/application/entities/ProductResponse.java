@@ -4,7 +4,7 @@ public class ProductResponse {
 	private String productName;
 	private String productImageUrl;
 	private String productImageThumbnailUrl;
-	private String productPrice;
+	private Float productPrice;
 	private String headerTopRightText;
 	private String headerTopLeftText;
 	private String productCtaText;
@@ -29,10 +29,10 @@ public class ProductResponse {
 	public void setProductImageThumbnailUrl(String productImageThumbnailUrl) {
 		this.productImageThumbnailUrl = productImageThumbnailUrl;
 	}
-	public String getProductPrice() {
+	public Float getProductPrice() {
 		return productPrice;
 	}
-	public void setProductPrice(String productPrice) {
+	public void setProductPrice(Float productPrice) {
 		this.productPrice = productPrice;
 	}
 	public String getHeaderTopRightText() {
@@ -67,7 +67,7 @@ public class ProductResponse {
 	}
 
 	public ProductResponse(String productName, String productImageUrl, String productImageThumbnailUrl,
-			String productPrice, String headerTopRightText, String headerTopLeftText, String productCtaText,
+			Float productPrice, String headerTopRightText, String headerTopLeftText, String productCtaText,
 			String productDetails) {
 		this.productName = productName;
 		this.productImageUrl = productImageUrl;

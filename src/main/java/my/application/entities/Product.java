@@ -20,7 +20,7 @@ public class Product {
 	private String productName;
 	
 	@Column(name = "product_price")
-    private String productPrice;
+    private Float productPrice;
 	
 	@Column(name = "product_top_right_text")
     private String headerTopRightText;
@@ -61,12 +61,12 @@ public class Product {
 	}
 
 
-	public String getProductPrice() {
+	public Float getProductPrice() {
 		return productPrice;
 	}
 
 
-	public void setProductPrice(String productPrice) {
+	public void setProductPrice(Float productPrice) {
 		this.productPrice = productPrice;
 	}
 
