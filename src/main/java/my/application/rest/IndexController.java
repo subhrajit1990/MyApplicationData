@@ -1,78 +1,76 @@
 package my.application.rest;
 
-import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import my.application.entities.ApplicationRequestWrapper;
 import my.application.entities.CommonRequest;
 import my.application.entities.GameMessage;
 import my.application.services.Services;
 
-//@CrossOrigin(origins = {"https://justguess.herokuapp.com/","http://localhost:8080"}, maxAge = 3600)
-@Path("/users")
-public class IndexController {
+@RestController
+@RequestMapping(value = "/users")
+public class IndexController implements ErrorController {
 
-	@Inject
+	@Autowired
 	Services services;
 
-	@GET
-	@Path("/welcome")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response welCome() {
-		return Response.ok("Welcome").build();
+	@RequestMapping(value = "/welcome")
+
+	public String welCome() {
+		return "Welcome";
 	}
-	
-	@GET
-	@Path("/topFive")
-	@Produces(MediaType.APPLICATION_JSON)
-    public Response topFive() {
-    	
-        Object topFiveResponse = services.topFveService();
-		return Response.ok(topFiveResponse).build();
+
+	@RequestMapping(value = "/topFive", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+
+	public Object topFive() {
+
+		Object topFiveResponse = services.topFveService();
+		return topFiveResponse;
 	}
-	
-	@GET
-	@Path("/cardList")
-	@Produces(MediaType.APPLICATION_JSON)
-    public Response cardList() {
-    	
-        Object cardListResponse = services.cardListService();
-		return Response.ok(cardListResponse).build();
+
+	@RequestMapping(value = "/cardList", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+
+	public Object cardList() {
+
+		Object cardListResponse = services.cardListService();
+		return cardListResponse;
 	}
-	
-	@POST
-	@Path("/score")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response score(@RequestBody ApplicationRequestWrapper requestParams) {
+
+	@RequestMapping(value = "/score", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+
+	public Object score(@RequestBody ApplicationRequestWrapper requestParams) {
 		CommonRequest commonRequest = requestParams.getCommonRequest();
 		GameMessage gameMessage = new GameMessage();
 		try {
-		 services.scoreService(commonRequest);
-		 gameMessage.setMessage("Success");
+			services.scoreService(commonRequest);
+			gameMessage.setMessage("Success");
 			gameMessage.setStatusCode("0");
-		}catch(Exception e) {
+		} catch (Exception e) {
 			gameMessage.setMessage("Error");
 			gameMessage.setStatusCode("100");
 		}
-		return Response.ok(gameMessage).build();
+		return gameMessage;
 	}
-	
-	@POST
-	@Path("/nameCheck")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response nameCheck(@RequestBody ApplicationRequestWrapper requestParams) {
+
+	@RequestMapping(value = "/nameCheck", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+
+	public Object nameCheck(@RequestBody ApplicationRequestWrapper requestParams) {
 		CommonRequest commonRequest = requestParams.getCommonRequest();
 		Object nameCheckResponse = services.nameCheckService(commonRequest);
-		return Response.ok(nameCheckResponse).build();
+		return nameCheckResponse;
+	}
+
+	@Override
+	public String getErrorPath() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

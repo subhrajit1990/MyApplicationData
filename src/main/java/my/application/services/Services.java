@@ -4,9 +4,8 @@ package my.application.services;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.inject.Inject;
-
 import org.glassfish.jersey.internal.guava.Lists;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import my.application.entities.CardList;
@@ -22,10 +21,10 @@ public class Services {
 	
 	HashMap<String, Object> response = null;
 	
-	@Inject
+	@Autowired
 	GuessMeAccountRepository guessMeAccountRepository;
 	
-	@Inject
+	@Autowired
 	CardListRepository cardListRepository;
 	
 	GameMessage msg = null;
