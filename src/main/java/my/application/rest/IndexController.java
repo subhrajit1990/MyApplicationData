@@ -24,7 +24,7 @@ public class IndexController implements ErrorController {
 	@Autowired
 	Services services;
 
-	@RequestMapping(value = {"/","/welcome"})
+	@RequestMapping(value = {"/welcome"})
 
 	public String welCome() {
 		return "Welcome";
