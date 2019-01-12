@@ -12,8 +12,8 @@ import my.application.entities.GuessMeAccount;
 @Repository
 public interface GuessMeAccountRepository extends CrudRepository<GuessMeAccount, Integer>{
 
-//	@Query("SELECT DISTINCT NEW my.application.entities.AccountResponse(account.username,account.point) FROM GuessMeAccount account ORDER BY account.point DESC LIMIT 5")
-//	List<Object> topFive();
+	@Query("SELECT  NEW my.application.entities.AccountResponse(account.username,account.point) FROM GuessMeAccount account ORDER BY account.point DESC LIMIT 5")
+	List<Object> topFive();
 	
 	
 	
