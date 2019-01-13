@@ -142,11 +142,11 @@ public class IndexController implements ErrorController {
 			
 			GameMessage msg = new GameMessage();
 			if (nameCheckResponse > 0) {
-				msg.setMessage(CUSTOMMESSAGES.NAMEEXISTIS.getMessage());
-				msg.setStatusCode(CUSTOMMESSAGES.NAMEEXISTIS.getCode());
+				msg.setMessage(CUSTOMMESSAGES.NAMEEXISTS.getMessage());
+				msg.setStatusCode(CUSTOMMESSAGES.NAMEEXISTS.getCode());
 			} else {
-				msg.setMessage(CUSTOMMESSAGES.NAMENOTEXISTIS.getMessage());
-				msg.setStatusCode(CUSTOMMESSAGES.NAMENOTEXISTIS.getCode());
+				msg.setMessage(CUSTOMMESSAGES.NAMENOTEXISTS.getMessage());
+				msg.setStatusCode(CUSTOMMESSAGES.NAMENOTEXISTS.getCode());
 			}
 			
 			responseHeader.setStatusCode(CUSTOMMESSAGES.SUCCESS.getCode());
