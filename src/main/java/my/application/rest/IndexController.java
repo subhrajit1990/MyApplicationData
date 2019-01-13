@@ -134,14 +134,24 @@ public class IndexController implements ErrorController {
 		responseHeader = new ResponseHeader();
 		responseWrapper = new ResponseWrapper();
 		responseBody = new ResponseBody();
-		Object nameCheckResponse = null;
+		Long nameCheckResponse = null;
 
 		UserRequest commonRequest = requestParams.getCommonRequest();
 		try {
 			nameCheckResponse = services.nameCheckService(commonRequest);
+			
+			GameMessage msg = new GameMessage();
+			if (nameCheckResponse > 0) {
+				msg.setMessage(CUSTOMMESSAGES.NAMEEXISTIS.getMessage());
+				msg.setStatusCode(CUSTOMMESSAGES.NAMEEXISTIS.getCode());
+			} else {
+				msg.setMessage(CUSTOMMESSAGES.NAMENOTEXISTIS.getMessage());
+				msg.setStatusCode(CUSTOMMESSAGES.NAMENOTEXISTIS.getCode());
+			}
+			
 			responseHeader.setStatusCode(CUSTOMMESSAGES.SUCCESS.getCode());
 			responseHeader.setStatusMessage(CUSTOMMESSAGES.SUCCESS.getMessage());
-			responseBody.setRespnse(nameCheckResponse);
+			responseBody.setRespnse(msg);
 			responseWrapper.setResponseBody(responseBody);
 		} catch (Exception e) {
 			responseHeader.setStatusCode(CUSTOMMESSAGES.PERSISTANCEERROR.getCode());

@@ -66,18 +66,11 @@ public class Services {
 		guessMeAccountRepository.save(myAccount);
 	}
 
-	public Object nameCheckService(UserRequest commonRequest) {
+	public Long nameCheckService(UserRequest commonRequest) {
 		System.out.println("Hi I am executing nameCheck");
-		msg = new GameMessage();
-		if (guessMeAccountRepository.countById(commonRequest.getName()) > 0) {
-			msg.setMessage("User Name Existis, please try a new name");
-			msg.setStatusCode("100");
-		} else {
-			msg.setMessage("Please continue");
-			msg.setStatusCode("0");
-		}
+		
 		// TODO Auto-generated method stub
-		return msg;
+		return guessMeAccountRepository.countById(commonRequest.getName());
 	}
 
 	public Object fetchProducts() {
