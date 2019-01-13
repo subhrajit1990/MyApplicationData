@@ -91,7 +91,6 @@ public class Services {
 	public Object procuctDetails(ProductRequest productRequest) {
 		// TODO Auto-generated method stub
 		response = new HashMap<String, Object>();
-		System.out.println("Hi Executiing services the product insretion");
 		Product product = new Product();
 		ProductImage productImage = new ProductImage();
 
@@ -110,12 +109,9 @@ public class Services {
 
 		productImage.setProduct(product);
 
-		// product.getProductImage().(productImage);
-
 		allProductsRepository.save(product);
 
 		response.put("status", "success");
-		System.out.println("Hi Executiing  service end the product insretion");
 		return response;
 	}
 

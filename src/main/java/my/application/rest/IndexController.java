@@ -43,41 +43,112 @@ public class IndexController implements ErrorController {
 	@RequestMapping(value = "/topFive", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 
 	public Object topFive() {
+		Object topFiveResponse = null;
+		try {
+			topFiveResponse = services.topFveService();
 
-		Object topFiveResponse = services.topFveService();
-		return topFiveResponse;
+			responseHeader.setStatusCode(CUSTOMMESSAGES.SUCCESS.getCode());
+			responseHeader.setStatusMessage(CUSTOMMESSAGES.SUCCESS.getMessage());
+			responseBody.setRespnse(topFiveResponse);
+			responseWrapper.setResponseBody(responseBody);
+
+		} catch (EmptyResultDataAccessException e) {
+			responseHeader.setStatusCode(CUSTOMMESSAGES.PERSISTANCEERROR.getCode());
+			responseHeader.setStatusMessage(CUSTOMMESSAGES.PERSISTANCEERROR.getMessage());
+			responseBody.setResponseMessage(CUSTOMMESSAGES.NODATA.getMessage());
+			responseBody.setResponseStatus(CUSTOMMESSAGES.NODATA.getCode());
+			responseWrapper.setResponseBody(responseBody);
+		} catch (Exception e) {
+
+			responseHeader.setStatusCode(CUSTOMMESSAGES.PERSISTANCEERROR.getCode());
+			responseHeader.setStatusMessage(CUSTOMMESSAGES.PERSISTANCEERROR.getMessage());
+		}
+		responseWrapper.setResponseHeader(responseHeader);
+
+		return responseWrapper;
 	}
 
 	@RequestMapping(value = "/cardList", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 
-	public Object cardList() {
+	public ResponseWrapper cardList() {
 
-		Object cardListResponse = services.cardListService();
+		responseHeader = new ResponseHeader();
+		responseWrapper = new ResponseWrapper();
+		responseBody = new ResponseBody();
+		Object cardListResponse = null;
+		try {
+			cardListResponse = services.cardListService();
 
-		return cardListResponse;
+			responseHeader.setStatusCode(CUSTOMMESSAGES.SUCCESS.getCode());
+			responseHeader.setStatusMessage(CUSTOMMESSAGES.SUCCESS.getMessage());
+			responseBody.setRespnse(cardListResponse);
+			responseWrapper.setResponseBody(responseBody);
+
+		} catch (EmptyResultDataAccessException e) {
+			responseHeader.setStatusCode(CUSTOMMESSAGES.PERSISTANCEERROR.getCode());
+			responseHeader.setStatusMessage(CUSTOMMESSAGES.PERSISTANCEERROR.getMessage());
+			responseBody.setResponseMessage(CUSTOMMESSAGES.NODATA.getMessage());
+			responseBody.setResponseStatus(CUSTOMMESSAGES.NODATA.getCode());
+			responseWrapper.setResponseBody(responseBody);
+		} catch (Exception e) {
+
+			responseHeader.setStatusCode(CUSTOMMESSAGES.PERSISTANCEERROR.getCode());
+			responseHeader.setStatusMessage(CUSTOMMESSAGES.PERSISTANCEERROR.getMessage());
+		}
+		responseWrapper.setResponseHeader(responseHeader);
+
+		return responseWrapper;
 	}
 
 	@RequestMapping(value = "/score", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 
-	public Object score(@RequestBody UserRequestWrapper requestParams) {
+	public ResponseWrapper score(@RequestBody UserRequestWrapper requestParams) {
+
+		responseHeader = new ResponseHeader();
+		responseWrapper = new ResponseWrapper();
+		responseBody = new ResponseBody();
+
 		UserRequest commonRequest = requestParams.getCommonRequest();
 		GameMessage gameMessage = new GameMessage();
 		try {
 			services.scoreService(commonRequest);
 			gameMessage.setMessage("Success");
+
+			responseHeader.setStatusCode(CUSTOMMESSAGES.SUCCESS.getCode());
+			responseHeader.setStatusMessage(CUSTOMMESSAGES.SUCCESS.getMessage());
+			responseBody.setRespnse(gameMessage.getMessage());
+			responseWrapper.setResponseBody(responseBody);
+
 		} catch (Exception e) {
-			gameMessage.setMessage(CUSTOMMESSAGES.PERSISTANCEERROR.getMessage());
-			gameMessage.setStatusCode(CUSTOMMESSAGES.PERSISTANCEERROR.getCode());
+
+			responseHeader.setStatusCode(CUSTOMMESSAGES.PERSISTANCEERROR.getCode());
+			responseHeader.setStatusMessage(CUSTOMMESSAGES.PERSISTANCEERROR.getMessage());
 		}
-		return gameMessage;
+		responseWrapper.setResponseHeader(responseHeader);
+		return responseWrapper;
 	}
 
 	@RequestMapping(value = "/nameCheck", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 
-	public Object nameCheck(@RequestBody UserRequestWrapper requestParams) {
+	public ResponseWrapper nameCheck(@RequestBody UserRequestWrapper requestParams) {
+		responseHeader = new ResponseHeader();
+		responseWrapper = new ResponseWrapper();
+		responseBody = new ResponseBody();
+		Object nameCheckResponse = null;
+
 		UserRequest commonRequest = requestParams.getCommonRequest();
-		Object nameCheckResponse = services.nameCheckService(commonRequest);
-		return nameCheckResponse;
+		try {
+			nameCheckResponse = services.nameCheckService(commonRequest);
+			responseHeader.setStatusCode(CUSTOMMESSAGES.SUCCESS.getCode());
+			responseHeader.setStatusMessage(CUSTOMMESSAGES.SUCCESS.getMessage());
+			responseBody.setRespnse(nameCheckResponse);
+			responseWrapper.setResponseBody(responseBody);
+		} catch (Exception e) {
+			responseHeader.setStatusCode(CUSTOMMESSAGES.PERSISTANCEERROR.getCode());
+			responseHeader.setStatusMessage(CUSTOMMESSAGES.PERSISTANCEERROR.getMessage());
+		}
+		responseWrapper.setResponseHeader(responseHeader);
+		return responseWrapper;
 	}
 
 	@RequestMapping(value = "/fetchProducts", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -93,7 +164,7 @@ public class IndexController implements ErrorController {
 			responseHeader.setStatusMessage(CUSTOMMESSAGES.SUCCESS.getMessage());
 			responseBody.setRespnse(productsResponse);
 			responseWrapper.setResponseBody(responseBody);
-			
+
 		} catch (EmptyResultDataAccessException e) {
 			responseHeader.setStatusCode(CUSTOMMESSAGES.PERSISTANCEERROR.getCode());
 			responseHeader.setStatusMessage(CUSTOMMESSAGES.PERSISTANCEERROR.getMessage());
@@ -104,7 +175,7 @@ public class IndexController implements ErrorController {
 			responseHeader.setStatusCode(CUSTOMMESSAGES.PERSISTANCEERROR.getCode());
 			responseHeader.setStatusMessage(CUSTOMMESSAGES.PERSISTANCEERROR.getMessage());
 		}
-		
+
 		responseWrapper.setResponseHeader(responseHeader);
 		return responseWrapper;
 	}
@@ -117,17 +188,13 @@ public class IndexController implements ErrorController {
 		responseWrapper = new ResponseWrapper();
 		responseBody = new ResponseBody();
 		ProductRequest productRequest = productRequestWrapper.getProductRequest();
-		System.out.println("Hi Executiing the product insretion");
 		try {
 			productDetailsReponse = services.procuctDetails(productRequest);
-			System.out.println("Hi Executiing done the product insretion");
 			responseHeader.setStatusCode(CUSTOMMESSAGES.SUCCESS.getCode());
 			responseHeader.setStatusMessage(CUSTOMMESSAGES.SUCCESS.getMessage());
 			responseBody.setRespnse(productDetailsReponse);
 			responseWrapper.setResponseBody(responseBody);
 		} catch (Exception e) {
-			
-			System.out.println("Hi Executiing exception the product insretion");
 			responseHeader.setStatusCode(CUSTOMMESSAGES.PERSISTANCEERROR.getCode());
 			responseHeader.setStatusMessage(CUSTOMMESSAGES.PERSISTANCEERROR.getMessage());
 		}
