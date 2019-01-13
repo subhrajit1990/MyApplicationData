@@ -18,7 +18,7 @@ import my.application.payload.ResponseWrapper;
 import my.application.payload.UserRequest;
 import my.application.payload.UserRequestWrapper;
 import my.application.services.Services;
-import my.application.utils.Messages;
+import my.application.utils.CUSTOMMESSAGES;
 import my.application.utils.FailureException;
 
 @RestController
@@ -66,8 +66,8 @@ public class IndexController implements ErrorController {
 			services.scoreService(commonRequest);
 			gameMessage.setMessage("Success");
 		} catch (Exception e) {
-			gameMessage.setMessage(Messages.PERSISTANCEERROR.getMessage());
-			gameMessage.setStatusCode(Messages.PERSISTANCEERROR.getCode());
+			gameMessage.setMessage(CUSTOMMESSAGES.PERSISTANCEERROR.getMessage());
+			gameMessage.setStatusCode(CUSTOMMESSAGES.PERSISTANCEERROR.getCode());
 		}
 		return gameMessage;
 	}
@@ -84,22 +84,25 @@ public class IndexController implements ErrorController {
 
 	public ResponseWrapper fetchProducts() {
 		Object productsResponse = null;
+		responseHeader = new ResponseHeader();
+		responseWrapper = new ResponseWrapper();
+		responseBody = new ResponseBody();
 		try {
 			productsResponse = services.fetchProducts();
-			responseHeader.setStatusCode(Messages.SUCCESS.getCode());
-			responseHeader.setStatusMessage(Messages.SUCCESS.getMessage());
+			responseHeader.setStatusCode(CUSTOMMESSAGES.SUCCESS.getCode());
+			responseHeader.setStatusMessage(CUSTOMMESSAGES.SUCCESS.getMessage());
 			responseBody.setRespnse(productsResponse);
 			responseWrapper.setResponseBody(responseBody);
 			
 		} catch (EmptyResultDataAccessException e) {
-			responseHeader.setStatusCode(Messages.PERSISTANCEERROR.getCode());
-			responseHeader.setStatusMessage(Messages.PERSISTANCEERROR.getMessage());
-			responseBody.setResponseMessage(Messages.NODATA.getMessage());
-			responseBody.setResponseStatus(Messages.NODATA.getCode());
+			responseHeader.setStatusCode(CUSTOMMESSAGES.PERSISTANCEERROR.getCode());
+			responseHeader.setStatusMessage(CUSTOMMESSAGES.PERSISTANCEERROR.getMessage());
+			responseBody.setResponseMessage(CUSTOMMESSAGES.NODATA.getMessage());
+			responseBody.setResponseStatus(CUSTOMMESSAGES.NODATA.getCode());
 			responseWrapper.setResponseBody(responseBody);
 		} catch (Exception e) {
-			responseHeader.setStatusCode(Messages.PERSISTANCEERROR.getCode());
-			responseHeader.setStatusMessage(Messages.PERSISTANCEERROR.getMessage());
+			responseHeader.setStatusCode(CUSTOMMESSAGES.PERSISTANCEERROR.getCode());
+			responseHeader.setStatusMessage(CUSTOMMESSAGES.PERSISTANCEERROR.getMessage());
 		}
 		
 		responseWrapper.setResponseHeader(responseHeader);
@@ -110,20 +113,23 @@ public class IndexController implements ErrorController {
 
 	public ResponseWrapper productDetails(@RequestBody ProductRequestWrapper productRequestWrapper) throws Exception {
 		Object productDetailsReponse = null;
+		responseHeader = new ResponseHeader();
+		responseWrapper = new ResponseWrapper();
+		responseBody = new ResponseBody();
 		ProductRequest productRequest = productRequestWrapper.getProductRequest();
 		System.out.println("Hi Executiing the product insretion");
 		try {
 			productDetailsReponse = services.procuctDetails(productRequest);
 			System.out.println("Hi Executiing done the product insretion");
-			responseHeader.setStatusCode(Messages.SUCCESS.getCode());
-			responseHeader.setStatusMessage(Messages.SUCCESS.getMessage());
+			responseHeader.setStatusCode(CUSTOMMESSAGES.SUCCESS.getCode());
+			responseHeader.setStatusMessage(CUSTOMMESSAGES.SUCCESS.getMessage());
 			responseBody.setRespnse(productDetailsReponse);
 			responseWrapper.setResponseBody(responseBody);
 		} catch (Exception e) {
 			
 			System.out.println("Hi Executiing exception the product insretion");
-			responseHeader.setStatusCode(Messages.PERSISTANCEERROR.getCode());
-			responseHeader.setStatusMessage(Messages.PERSISTANCEERROR.getMessage());
+			responseHeader.setStatusCode(CUSTOMMESSAGES.PERSISTANCEERROR.getCode());
+			responseHeader.setStatusMessage(CUSTOMMESSAGES.PERSISTANCEERROR.getMessage());
 		}
 
 		responseWrapper.setResponseHeader(responseHeader);
