@@ -1,6 +1,5 @@
 package my.application.payload;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ResponseWrapper {
@@ -8,7 +7,7 @@ public class ResponseWrapper {
 	@JsonProperty("responseHeader")
 	private ResponseHeader responseHeader;
 	
-	@JsonIgnore
+	@JsonProperty("responseBody")
 	private ResponseBody responseBody;
 
 	public ResponseHeader getResponseHeader() {
