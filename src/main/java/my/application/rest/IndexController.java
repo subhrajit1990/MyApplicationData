@@ -111,13 +111,17 @@ public class IndexController implements ErrorController {
 	public ResponseWrapper productDetails(@RequestBody ProductRequestWrapper productRequestWrapper) throws Exception {
 		Object productDetailsReponse = null;
 		ProductRequest productRequest = productRequestWrapper.getProductRequest();
+		System.out.println("Hi Executiing the product insretion");
 		try {
 			productDetailsReponse = services.procuctDetails(productRequest);
+			System.out.println("Hi Executiing done the product insretion");
 			responseHeader.setStatusCode(Messages.SUCCESS.getCode());
 			responseHeader.setStatusMessage(Messages.SUCCESS.getMessage());
 			responseBody.setRespnse(productDetailsReponse);
 			responseWrapper.setResponseBody(responseBody);
 		} catch (Exception e) {
+			
+			System.out.println("Hi Executiing exception the product insretion");
 			responseHeader.setStatusCode(Messages.PERSISTANCEERROR.getCode());
 			responseHeader.setStatusMessage(Messages.PERSISTANCEERROR.getMessage());
 		}
