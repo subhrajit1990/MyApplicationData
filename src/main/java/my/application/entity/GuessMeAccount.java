@@ -2,6 +2,8 @@ package my.application.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -10,7 +12,8 @@ import javax.persistence.Table;
 public class GuessMeAccount {
 
 	@Id
-	@Column(name = "user_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(columnDefinition = "serial",name = "user_id")
 	private String userId;
 	
 	@Column(name = "username")
