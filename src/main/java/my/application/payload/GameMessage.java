@@ -1,4 +1,4 @@
-package my.application.entities;
+package my.application.payload;
 
 public class GameMessage {
 

@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import my.application.entities.GuessMeAccount;
+import my.application.entity.GuessMeAccount;
 
 @Repository
 public interface GuessMeAccountRepository extends CrudRepository<GuessMeAccount, Integer>{

@@ -1,6 +1,6 @@
-package my.application.entities;
+package my.application.payload;
 
-public class ProductResponse {
+public class ProductRequest {
 	private String productName;
 	private String productImageUrl;
 	private String productImageThumbnailUrl;
@@ -10,7 +10,6 @@ public class ProductResponse {
 	private String productCtaText;
 	private String productDetails;
 	private String productId;
-	
 	public String getProductName() {
 		return productName;
 	}
@@ -65,18 +64,6 @@ public class ProductResponse {
 	public void setProductId(String productId) {
 		this.productId = productId;
 	}
-
-	public ProductResponse(String productName, String productImageUrl, String productImageThumbnailUrl,
-			Float productPrice, String headerTopRightText, String headerTopLeftText, String productCtaText,
-			String productDetails) {
-		this.productName = productName;
-		this.productImageUrl = productImageUrl;
-
-		this.productImageThumbnailUrl = productImageThumbnailUrl;
-		this.productPrice = productPrice;
-		this.headerTopRightText = headerTopRightText;
-		this.headerTopLeftText = headerTopLeftText;
-		this.productCtaText = productCtaText;
-		this.productDetails = productDetails;
-	}
+	
+	
 }

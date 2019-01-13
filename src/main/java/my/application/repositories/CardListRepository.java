@@ -2,7 +2,7 @@ package my.application.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 
-import my.application.entities.CardList;
+import my.application.entity.CardList;
 
 
 

@@ -8,13 +8,13 @@ import org.glassfish.jersey.internal.guava.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import my.application.entities.CardList;
-import my.application.entities.CommonRequest;
-import my.application.entities.GuessMeAccount;
-import my.application.entities.Product;
-import my.application.entities.ProductImage;
-import my.application.entities.ProductRequest;
-import my.application.entities.GameMessage;
+import my.application.entity.CardList;
+import my.application.entity.GuessMeAccount;
+import my.application.entity.Product;
+import my.application.entity.ProductImage;
+import my.application.payload.GameMessage;
+import my.application.payload.ProductRequest;
+import my.application.payload.UserRequest;
 import my.application.repositories.AllProductsRepository;
 import my.application.repositories.CardListRepository;
 import my.application.repositories.GuessMeAccountRepository;
@@ -55,7 +55,7 @@ public class Services {
 		return response;
 	}
 
-	public void scoreService(CommonRequest commonRequest) {
+	public void scoreService(UserRequest commonRequest) {
 		// TODO Auto-generated method stub
 		System.out.println("Hi I am executing inserting score");
 		myAccount = new GuessMeAccount();
@@ -66,7 +66,7 @@ public class Services {
 		guessMeAccountRepository.save(myAccount);
 	}
 
-	public Object nameCheckService(CommonRequest commonRequest) {
+	public Object nameCheckService(UserRequest commonRequest) {
 		System.out.println("Hi I am executing nameCheck");
 		msg = new GameMessage();
 		if (guessMeAccountRepository.countById(commonRequest.getName()) > 0) {

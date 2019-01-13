@@ -1,10 +1,10 @@
-package my.application.entities;
+package my.application.payload;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CommonRequest {
+public class UserRequest {
 
 	@JsonProperty("name")
 	private String name;

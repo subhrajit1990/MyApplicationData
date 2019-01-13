@@ -1,7 +1,5 @@
 package my.application.rest;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -11,12 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import my.application.entities.ApplicationRequestWrapper;
-import my.application.entities.CommonRequest;
-import my.application.entities.GameMessage;
-import my.application.entities.ProductRequest;
+import my.application.payload.GameMessage;
+import my.application.payload.ProductRequest;
+import my.application.payload.ProductRequestWrapper;
+import my.application.payload.ResponseBody;
+import my.application.payload.ResponseHeader;
+import my.application.payload.ResponseWrapper;
+import my.application.payload.UserRequest;
+import my.application.payload.UserRequestWrapper;
 import my.application.services.Services;
-import my.application.utils.Errors;
+import my.application.utils.Messages;
 import my.application.utils.FailureException;
 
 @RestController
@@ -26,13 +28,19 @@ public class IndexController implements ErrorController {
 	@Autowired
 	Services services;
 
-	@RequestMapping(value = {"/welcome"})
+	ResponseWrapper responseWrapper = null;
+
+	ResponseHeader responseHeader = null;
+
+	ResponseBody responseBody = null;
+
+	@RequestMapping(value = { "/welcome" })
 
 	public String welCome() {
 		return "Welcome";
 	}
 
-	@RequestMapping(value = "/topFive", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/topFive", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 
 	public Object topFive() {
 
@@ -40,64 +48,84 @@ public class IndexController implements ErrorController {
 		return topFiveResponse;
 	}
 
-	@RequestMapping(value = "/cardList", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/cardList", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 
 	public Object cardList() {
-		
+
 		Object cardListResponse = services.cardListService();
-		
+
 		return cardListResponse;
 	}
 
-	@RequestMapping(value = "/score", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/score", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 
-	public Object score(@RequestBody ApplicationRequestWrapper requestParams) {
-		CommonRequest commonRequest = requestParams.getCommonRequest();
+	public Object score(@RequestBody UserRequestWrapper requestParams) {
+		UserRequest commonRequest = requestParams.getCommonRequest();
 		GameMessage gameMessage = new GameMessage();
 		try {
 			services.scoreService(commonRequest);
 			gameMessage.setMessage("Success");
-		}catch (Exception e) {
-			gameMessage.setMessage(Errors.PERSISTANCEERROR.getErrorMessage());
-			gameMessage.setStatusCode(Errors.PERSISTANCEERROR.getErrorCode());
+		} catch (Exception e) {
+			gameMessage.setMessage(Messages.PERSISTANCEERROR.getMessage());
+			gameMessage.setStatusCode(Messages.PERSISTANCEERROR.getCode());
 		}
 		return gameMessage;
 	}
 
 	@RequestMapping(value = "/nameCheck", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 
-	public Object nameCheck(@RequestBody ApplicationRequestWrapper requestParams) {
-		CommonRequest commonRequest = requestParams.getCommonRequest();
+	public Object nameCheck(@RequestBody UserRequestWrapper requestParams) {
+		UserRequest commonRequest = requestParams.getCommonRequest();
 		Object nameCheckResponse = services.nameCheckService(commonRequest);
 		return nameCheckResponse;
 	}
 
 	@RequestMapping(value = "/fetchProducts", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 
-	public Object fetchProducts() {
+	public ResponseWrapper fetchProducts() {
 		Object productsResponse = null;
 		try {
-		 productsResponse = services.fetchProducts();
-		}catch(EmptyResultDataAccessException e) {
-			System.out.println(" no results "+e.getMessage());
-		}catch(Exception e) {
-			System.out.println(" FETCHING "+e.getMessage());
+			productsResponse = services.fetchProducts();
+			responseHeader.setStatusCode(Messages.SUCCESS.getCode());
+			responseHeader.setStatusMessage(Messages.SUCCESS.getMessage());
+			responseBody.setRespnse(productsResponse);
+			responseWrapper.setResponseBody(responseBody);
+			
+		} catch (EmptyResultDataAccessException e) {
+			responseHeader.setStatusCode(Messages.PERSISTANCEERROR.getCode());
+			responseHeader.setStatusMessage(Messages.PERSISTANCEERROR.getMessage());
+			responseBody.setResponseMessage(Messages.NODATA.getMessage());
+			responseBody.setResponseStatus(Messages.NODATA.getCode());
+			responseWrapper.setResponseBody(responseBody);
+		} catch (Exception e) {
+			responseHeader.setStatusCode(Messages.PERSISTANCEERROR.getCode());
+			responseHeader.setStatusMessage(Messages.PERSISTANCEERROR.getMessage());
 		}
-		return productsResponse;
+		
+		responseWrapper.setResponseHeader(responseHeader);
+		return responseWrapper;
 	}
-	
-	@RequestMapping(value = "/products", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 
-	public Object productDetails(@RequestBody ProductRequest productRequest) throws Exception {
+	@RequestMapping(value = "/products", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+
+	public ResponseWrapper productDetails(@RequestBody ProductRequestWrapper productRequestWrapper) throws Exception {
 		Object productDetailsReponse = null;
+		ProductRequest productRequest = productRequestWrapper.getProductRequest();
 		try {
-		 productDetailsReponse = services.procuctDetails(productRequest);
-		}catch(Exception e) {
-			System.out.println(" INSERTING "+e.getMessage());
+			productDetailsReponse = services.procuctDetails(productRequest);
+			responseHeader.setStatusCode(Messages.SUCCESS.getCode());
+			responseHeader.setStatusMessage(Messages.SUCCESS.getMessage());
+			responseBody.setRespnse(productDetailsReponse);
+			responseWrapper.setResponseBody(responseBody);
+		} catch (Exception e) {
+			responseHeader.setStatusCode(Messages.PERSISTANCEERROR.getCode());
+			responseHeader.setStatusMessage(Messages.PERSISTANCEERROR.getMessage());
 		}
-		return productDetailsReponse;
+
+		responseWrapper.setResponseHeader(responseHeader);
+		return responseWrapper;
 	}
-	
+
 	@Override
 	public String getErrorPath() {
 		// TODO Auto-generated method stub
