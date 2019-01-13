@@ -3,7 +3,7 @@ package my.application.payload;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ProductRequestWrapper {
-	@JsonProperty("productRequest")
+	@JsonProperty("ProductRequest")
 	private ProductRequest productRequest;
 
 	public ProductRequest getProductRequest() {
