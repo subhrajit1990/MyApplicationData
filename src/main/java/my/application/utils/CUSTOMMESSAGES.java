@@ -1,5 +1,8 @@
 package my.application.utils;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public enum CUSTOMMESSAGES {
 PERSISTANCEERROR("100","Error in processing request"),
 NODATA("100","No Data or record found"),
@@ -16,6 +19,8 @@ NAMENOTEXISTS("0","Please proceed with this name");
 		this.Message = msg;
 	}
 
+	
+	
 	public String getCode() {
 		return Code;
 	}
